@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="global.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <div><a href="#">Nodes</a></div>
+        <div><a href="#">Logs</a></div>
+        <div><a href="sync">SYNC</a></div>
+    </div>
+    <div class="content"></div>
+    <script>
+        fetch("data").then(res => res.json()).then(data => {
+            // console.log(data)
+            let content = document.querySelector(".content")
+            data.devices.forEach(device => {
+                content.innerHTML += `<div><a href="http://${device}">${device}</a></div>`
+            }) 
+        })
+        
+
+        
+
+    </script>
+</body>
+</html>

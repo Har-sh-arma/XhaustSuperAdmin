@@ -1,0 +1,151 @@
+:root{
+    --primary-color: #D67B60;
+    --very-light: #F9F9F9;
+    --light : #e9e9e9;
+    --dark : #898989;
+    --very-dark : #2e2e2e;
+  }
+  
+  body{
+    height: 100vh;
+    width: 98vw;
+    display: grid;
+    grid-template-rows: 2fr 8fr 2fr 4fr;
+    background-color: var(--dark);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .nav > div>a:hover{
+    background-color: var(--very-light);
+    color: var(--primary-color);
+  }
+
+  .nav > div>a.current_nav{
+    background-color: var(--very-light);
+    color: var(--primary-color); 
+  }
+  *{
+    user-select: none;
+  }
+
+body > div > div {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+
+  a{
+    color: var(--light);
+    text-decoration: none;
+  }
+
+
+  
+.nav{
+  font: sans-serif;
+  font-size: 2.5vw;
+  color: var(--light);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.nav > div{
+  border-radius: 5%;
+  background-color: var(--primary-color);
+  border: 3px solid var(--light);
+  display: grid;
+  place-items: center;
+}
+
+a{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+  -webkit-appearance: none;
+   appearance: none;
+   background: transparent;
+   cursor: pointer;
+   /* width: 15rem; */
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+ outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #053a5f;
+  border-radius: 0.5rem;
+  height: 0.5rem;  
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+ -webkit-appearance: none; /* Override default look */
+  appearance: none ;
+  margin-top: -12px; /* Centers thumb on the track */
+
+  /*custom styles*/
+  background-color: #5cd5eb;
+  height: 2rem;
+  width: 1rem;
+}
+
+input[type="range"].vertical {
+  writing-mode:vertical-lr;
+  height: 80%;
+
+}
+
+input[type="range"].vertical::-webkit-slider-thumb{
+  height: 5rem !important;
+  width: 3rem !important;
+}
+
+
+
+
+
+input[type="range"]:focus::-webkit-slider-thumb {   
+ border: 1px solid #053a5f;
+ outline: 3px solid #053a5f;
+ outline-offset: 0.125rem; 
+}
+
+/******** Firefox styles ********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+  background-color: #053a5f;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+
+  /*custom styles*/
+  background-color: #5cd5eb;
+  height: 2rem;
+  width: 1rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+ border: 1px solid #053a5f;
+ outline: 3px solid #053a5f;
+ outline-offset: 0.125rem; 
+}
+html, body {
+  overscroll-behavior-x: none;
+}
