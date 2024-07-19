@@ -3,14 +3,24 @@ import http.server
 import socketserver
 import json
 import os
-
+from fork_util import fork_list, kill_all
+import argparse
 
 system_state = None
 PORT = 8000
 DIRECTORY = "."
 
 
+parser = argparse.ArgumentParser("Crawler","Crawler to Discover Raspis on the Network")
 
+parser.add_argument("-p", "--path", help="Path for the parent Superadmin", type=str, default="/abc")
+parser.add_argument("-P", "--port", help="Port for the parent Superadmin", type=int, default=1001)
+parser.add_argument("-S", "--server", help="server address", type=str)
+
+args = parser.parse_args()
+
+
+pid_list = []
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -30,10 +40,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     #add a get method to serve when super returns 404 (not found)
     def do_GET(self):
+        global pid_list
         # print(self.path.split("/"))
         if self.path.split("/")[1] == "data":
             with open("data.json", "r") as f:
                 data = json.load(f)
+            kill_all(pid_list)
+            
+            remote_ports = []
+            for i in range(len(data["devices"])):
+                remote_ports.append(args.port+i+1)
+
+            pid_list = fork_list(data["devices"], remote_ports, args.server, 80, args.path)
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
