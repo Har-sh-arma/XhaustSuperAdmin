@@ -50,12 +50,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             remote_ports = []
             for i in range(len(data["devices"])):
                 remote_ports.append(args.port+i+1)
-
+            data["remote_ports"]= remote_ports
             pid_list = fork_list(data["devices"], remote_ports, args.server, 80, args.path)
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            body = json.dumps(data).encode()
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', len(body))
             self.end_headers()
-            self.wfile.write(json.dumps(data).encode())
+            self.wfile.write(body)
             return
         if self.path.split("/")[1] == "sync":
             os.system("py crawl.py")

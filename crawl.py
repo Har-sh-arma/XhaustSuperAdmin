@@ -3,7 +3,7 @@ import socket
 import os
 import json
 import requests
-import argparse
+from net_tools import ping_net
 
 "Since the nmap app is used to dicover all of the devices nmap is a dependency and so is Windows findstr--> default windows filter"
 
@@ -36,8 +36,6 @@ for interface in netifaces.interfaces():
                 continue
             selfIF.append(j)
 
-        
-
 
 netmasks = []
 for i in selfIF:
@@ -49,13 +47,11 @@ for i in range(len(selfIF)):
     print(f"devices at network {selfIF[i]}")
     if(netmasks[i]<24):
         continue
-    cmd_output = os.popen(f"nmap -sn  {selfIF[i]["broadcast"]}/{netmasks[i]} | findstr \"report for *\"").read()
-    print([a.split(" ")[-1] for a in cmd_output.split("\n")][0] ,  selfIF[i]["addr"])
-    all_devices = [a.split(" ")[-1] for a in cmd_output.split("\n")]
-    all_devices.remove(selfIF[i]["addr"])
+    
+    all_devices = ping_net(f" {selfIF[i]["addr"]}/{netmasks[i]}", 500, 20)
     devices += all_devices
 
-
+print(devices)
 webs = []
 for device in devices:
     if device== "":
